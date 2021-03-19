@@ -27,12 +27,17 @@ namespace EndPointConnector.Controllers
         }
         [HttpPost]
         [Route("api/post/CreatePost")]
-        public int CreatePost(post Post)
+        public int CreatePost(post post1)
         {
             int id = -1;
             PostContext = new postContext();
-
-            id = PostContext.Posts.Add(Post).Id;
+            //post post1 = new post
+            //{
+            //    Title=title
+            //};
+            post newItem = PostContext.Posts.Add(post1);
+            PostContext.SaveChanges();
+            id = newItem.Id;
             return id;
         }
     }
