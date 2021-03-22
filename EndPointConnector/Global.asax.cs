@@ -18,6 +18,20 @@ namespace EndPointConnector
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
-		}		
+		}
+		protected void Application_BeginRequest(Object sender, EventArgs e)
+		{
+			//HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
+			if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
+			{
+				HttpContext.Current.Response.AddHeader("Cache-Control", "no-cache");
+				HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "POST, GET, PATCH");
+				HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
+				HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Origin,Content-Type");
+				HttpContext.Current.Response.AddHeader("Access-Control-Max-Age", "1728000");
+				HttpContext.Current.Response.End();
+			}
+		}
 	}
 }
+
